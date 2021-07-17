@@ -1,0 +1,17 @@
+﻿.list-search {
+    display: flex;
+    justify-content: center;
+}
+
+    .list-search > p {
+        border: 1px solid darkgray;
+        margin: 20px 100px;
+    }
+
+.add-sach {
+    text-align: center;
+    padding-top: 50px;
+}
+.add-sach > .form-control{
+    margin-bottom: 10px;
+}

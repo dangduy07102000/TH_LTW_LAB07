@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Quản lý sách</title>
+    <link href="Style.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="list-search">
+        <div>
+            <h2>Danh sách</h2>
+            <ul id="sachs" />
+        </div>
+        <p></p>
+        <div>
+            <h2>Tìm kiếm bằng mã sách</h2>
+            <input type="text" id="prodId" size="5" />
+            <input type="button" value="Search" onclick="find();" />
+            <p id="sach" />
+        </div>
+    </div>
+    <div class="add-sach">
+        <h2>Thêm mới một cuốn sách</h2>
+        <label>Type</label>
+        <input type="text" class="form-control" id="type">
+        <br />
+        <label>Content</label>
+        <input type="text" class="form-control" id="content">
+        <br />
+        <label>Author</label>
+        <input type="text" class="form-control" id="author">
+        <br />
+        <label>Price</label>
+        <input type="text" class="form-control" id="price">
+        <br />
+        <input type="button" id="button-insert" value="Insert">
+        <input type="button" id="button-edit" value="Edit">
+        <input type="button" id="button-delete" value="Delete">
+    </div>
+    <script src="https://code.jquery.com/jquery-2.0.3.js" integrity="sha256-lCf+LfUffUxr81+W0ZFpcU0LQyuZ3Bj0F2DQNCxTgSI=" crossorigin="anonymous"></script>
+    <script>
+        var uri = 'api/sach';
+        $(document).ready(function () {
+            $.getJSON(uri)
+                .done(function (data) {
+                    $.each(data, function (key, item) {
+                        $('<li>', { text: formatItem(item) }).appendTo($('#sachs'))
+                        });
+                    });
+                });
+
+            function formatItem(item) {
+                return item.Type + ': $' + item.Price;
+            }
+            function find() {
+                var id = $('#prodId').val();
+                $.getJSON(uri + '/' + id)
+                    .done(function (data) {
+                        $('#sach').text(formatItem(data));
+                    })
+                    .fail(function (jqXHR, textStatus, err) {
+                        $('#sach').text('Error: ' + err);
+                    });
+            }
+    </script>
+</body>
+</html>
